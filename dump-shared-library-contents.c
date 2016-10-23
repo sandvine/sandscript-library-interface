@@ -6,24 +6,50 @@
 
 psl_GetEventManifest GetEventManifest;
 psl_GetManifest GetManifest;
+const char *types[] = {
+    "boolean",
+    "string",
+    "integer",
+    "float",
+    "ipaddress"
+};
 
 static void
 dumpFunction(const psl_FunctionDescription * const f)
 {
     int i;
-    const char *types[] = {
-        "boolean",
-        "string",
-        "integer",
-        "float",
-        "ipaddress"
-    };
+
     printf("%s %s(", types[f->returnType], f->functionName);
     for (i=0; i < f->numArgs; i++)
     {
         printf("%s%s", types[f->argTypes[i]], (i+1< f->numArgs) ? ",":"");
     }
     printf(")\n");
+}
+
+static void
+dumpEvents(const psl_EventManifest * const e)
+{
+    int i,j;
+    printf(
+    "------------------------------------------------------------------------------\n"
+    "|%-28s|%-8s| Notes                                |\n"
+    "|----------------------------|--------|--------------------------------------|\n",
+      "Event-name","Type");
+
+    for (i = 0; i < e->numDescriptions; i++)
+    {
+        for (j = 0; j < e->numFields; j++)
+        {
+            if (e->eventDescriptions[i]->contextNumber == e->eventFields[j]->contextNumber)
+                printf("|%-28s|%-8s|%38s|\n",
+  e->eventFields[j]->fieldName,
+  types[e->eventFields[j]->type],"");
+        }
+    }
+
+    printf(
+    "------------------------------------------------------------------------------\n");
 }
 
 static void
@@ -61,15 +87,7 @@ dumpLib(char *lib)
     e = ep();
     if (e)
     {
-        for (i = 0; i < e->numDescriptions; i++)
-        {
-            printf(" Desc: %s [ctxt: %u]\n", e->eventDescriptions[i]->eventName, e->eventDescriptions[i]->contextNumber);
-            for (j = 0; j < e->numFields; j++)
-            {
-                if (e->eventDescriptions[i]->contextNumber == e->eventFields[j]->contextNumber)
-                    printf("  Field: %s [ctxt: %u]\n", e->eventFields[j]->fieldName, e->eventFields[j]->contextNumber);
-            }
-        }
+        dumpEvents(e);
     }
 }
 
