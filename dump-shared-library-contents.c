@@ -8,6 +8,25 @@ psl_GetEventManifest GetEventManifest;
 psl_GetManifest GetManifest;
 
 static void
+dumpFunction(const psl_FunctionDescription * const f)
+{
+    int i;
+    const char *types[] = {
+        "boolean",
+        "string",
+        "integer",
+        "float",
+        "ipaddress"
+    };
+    printf("%s %s(", types[f->returnType], f->functionName);
+    for (i=0; i < f->numArgs; i++)
+    {
+        printf("%s%s", types[f->argTypes[i]], (i+1< f->numArgs) ? ",":"");
+    }
+    printf(")\n");
+}
+
+static void
 dumpLib(char *lib)
 {
     int i,j;
@@ -28,25 +47,24 @@ dumpLib(char *lib)
     ep = dlsym(lh, "GetEventManifest");
 
     m = mp();
-    
-    if (m) 
+
+    if (m)
     {
-        printf("m->version: %u, m->numFunctionDescriptions: %u, m->functionDesscriptions: %p\n", m->version,
-                                                                                                 m->numFunctionDescriptions,
-                                                                                                 m->functionDescriptions);
-        for (i = 0; i < m->numFunctionDescriptions; i++) 
+        printf("m->version: %u, m->numFunctionDescriptions: %u, m->functionDesscriptions: %p\n", m->version, m->numFunctionDescriptions, m->functionDescriptions);
+        for (i = 0; i < m->numFunctionDescriptions; i++)
         {
-            printf(" Fn: %s\n", m->functionDescriptions[i]->functionName);
+            dumpFunction(m->functionDescriptions[i]);
+//            printf(" Fn: %s\n", m->functionDescriptions[i]->functionName);
         }
     }
 
     e = ep();
-    if (e) 
+    if (e)
     {
-        for (i = 0; i < e->numDescriptions; i++) 
+        for (i = 0; i < e->numDescriptions; i++)
         {
             printf(" Desc: %s [ctxt: %u]\n", e->eventDescriptions[i]->eventName, e->eventDescriptions[i]->contextNumber);
-            for (j = 0; j < e->numFields; j++) 
+            for (j = 0; j < e->numFields; j++)
             {
                 if (e->eventDescriptions[i]->contextNumber == e->eventFields[j]->contextNumber)
                     printf("  Field: %s [ctxt: %u]\n", e->eventFields[j]->fieldName, e->eventFields[j]->contextNumber);
