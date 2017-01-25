@@ -1,5 +1,7 @@
 #include <stdio.h>
 #include <dlfcn.h>
+#include <stdlib.h>
+
 
 #include "sandscript-library-interface/sharedLibManifest.h"
 #include "sandscript-library-interface/sharedLibEvents.h"
@@ -100,4 +102,5 @@ main(int argc, char **argv)
     {
         dumpLib(argv[libnum]);
     }
+    exit(0);
 }
