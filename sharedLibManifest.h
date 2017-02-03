@@ -33,12 +33,12 @@ extern "C" {
 // Describes one function in the shared library.
 typedef struct psl_FunctionDescription
 {
-	const char*   functionName;   //!< null-terminated string for the name of the function in policy.
-	uint32_t      flags;          //!< Flags. See psl_Flag_* Set unused bits to to 0.
-	psl_Function* functionPointer;//!< Function to be called at each invocation.
-	psl_DataType  returnType;     //!< Data type of the function return value.
-	uint16_t      numArgs;        //!< Number of arguments the function requires.
-	const psl_DataType* argTypes; //!< Data types of each function argument.
+    const char*   functionName;   //!< null-terminated string for the name of the function in policy.
+    uint32_t      flags;          //!< Flags. See psl_Flag_* Set unused bits to to 0.
+    psl_Function* functionPointer;//!< Function to be called at each invocation.
+    psl_DataType  returnType;     //!< Data type of the function return value.
+    uint16_t      numArgs;        //!< Number of arguments the function requires.
+    const psl_DataType* argTypes; //!< Data types of each function argument.
 } psl_FunctionDescription;
 
 // include this flag in the flags field if the function depends solely on its inputs.
@@ -47,12 +47,12 @@ typedef struct psl_FunctionDescription
 
 typedef struct psl_Manifest
 {
-	//! Library API version identifier. Use 1.
-	unsigned                       version;
-	//! Number of entries in the functionDescriptions array.
-	unsigned                       numFunctionDescriptions;
-	//! Array, with one entry for each function in the shared library.
-	const psl_FunctionDescription* const* functionDescriptions;
+    //! Library API version identifier. Use 1.
+    unsigned                       version;
+    //! Number of entries in the functionDescriptions array.
+    unsigned                       numFunctionDescriptions;
+    //! Array, with one entry for each function in the shared library.
+    const psl_FunctionDescription* const* functionDescriptions;
 } psl_Manifest;
 
 //! Function signature required for the function named "GetManifest"

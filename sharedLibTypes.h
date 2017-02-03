@@ -32,29 +32,29 @@ extern "C" {
 //! The possible argument and return types
 typedef enum psl_DataType
 {
-	psl_boolean = 0,
-	psl_string = 1,
-	psl_integer = 2,
-	psl_float = 3,
-	psl_ipaddress = 4
+    psl_boolean = 0,
+    psl_string = 1,
+    psl_integer = 2,
+    psl_float = 3,
+    psl_ipaddress = 4
 } psl_DataType;
 
 //! String arguments and return values are references, not passed by value.
 //! Strings are pointer/length (not null-terminated).
 typedef struct psl_stringRef
 {
-	const char*    begin;
-	unsigned       length;
+    const char*    begin;
+    unsigned       length;
 } psl_stringRef;
 
 //! The argument and return values, per psl_DataType
 typedef union psl_Value
 {
-	bool          b;     //!< boolean
-	struct psl_stringRef s;     //!< string reference
-	int64_t       i;     //!< integer
-	double        f;     //!< float
-	uint8_t       a[16]; //!< address IPv6 or IPv4-mapped-IPv6
+    bool          b;     //!< boolean
+    struct psl_stringRef s;     //!< string reference
+    int64_t       i;     //!< integer
+    double        f;     //!< float
+    uint8_t       a[16]; //!< address IPv6 or IPv4-mapped-IPv6
 } psl_Value;
 
 //! The function signature required for loadable functions.
