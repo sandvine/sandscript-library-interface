@@ -33,20 +33,22 @@ static void
 dumpEvents(const psl_EventManifest * const e)
 {
     int i,j;
+
     printf(
     "------------------------------------------------------------------------------\n"
-    "|%-28s|%-8s| Notes                                |\n"
-    "|----------------------------|--------|--------------------------------------|\n",
-      "Event-name","Type");
+    "|%-16s|%-30s|%-8s| Notes             |\n"
+    "|----------------|------------------------------|--------|-------------------|\n",
+      "Event Name","Field Name","Type");
 
     for (i = 0; i < e->numDescriptions; i++)
     {
         for (j = 0; j < e->numFields; j++)
         {
             if (e->eventDescriptions[i]->contextNumber == e->eventFields[j]->contextNumber)
-                printf("|%-28s|%-8s|%38s|\n",
-  e->eventFields[j]->fieldName,
-  types[e->eventFields[j]->type],"");
+                printf("|%-16s|%-30s|%-8s|%19s|\n",
+                       e->eventDescriptions[i]->eventName,
+                       e->eventFields[j]->fieldName,
+                       types[e->eventFields[j]->type],"");
         }
     }
 
@@ -74,11 +76,11 @@ dumpLib(char *lib)
     mp = dlsym(lh, "GetManifest");
     ep = dlsym(lh, "GetEventManifest");
 
-    m = mp();
-
-    if (m)
+    if (mp && (m=mp()) && m->numFunctionDescriptions)
     {
-        printf("m->version: %u, m->numFunctionDescriptions: %u, m->functionDesscriptions: %p\n", m->version, m->numFunctionDescriptions, m->functionDescriptions);
+        printf("Functions\n");
+        printf("=========\n");
+        //printf("m->version: %u, m->numFunctionDescriptions: %u, m->functionDesscriptions: %p\n", m->version, m->numFunctionDescriptions, m->functionDescriptions);
         for (i = 0; i < m->numFunctionDescriptions; i++)
         {
             dumpFunction(m->functionDescriptions[i]);
@@ -86,8 +88,7 @@ dumpLib(char *lib)
         }
     }
 
-    e = ep();
-    if (e)
+    if (ep && (e=ep()) )
     {
         dumpEvents(e);
     }
