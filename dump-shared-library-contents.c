@@ -3,8 +3,8 @@
 #include <stdlib.h>
 
 
-#include "sandscript-library-interface/sharedLibManifest.h"
-#include "sandscript-library-interface/sharedLibEvents.h"
+#include "sharedLibManifest.h"
+#include "sharedLibEvents.h"
 
 psl_GetEventManifest GetEventManifest;
 psl_GetManifest GetManifest;
