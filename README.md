@@ -40,7 +40,10 @@ linked with `-shared` and `-fPIC`. We also recommend turning on all warnings
 
 # Sanity-Checking
 
-To 'test' your library, you can compile `dump-shared-library-contents.c` as: 
+To 'test' your library, there is a simple tool that will open your shared
+library and read the manifests.
+
+You can compile `dump-shared-library-contents.c` as:
 
     gcc -o dump-shared-library-contents dump-shared-library-contents.c -ldl
 
@@ -49,4 +52,7 @@ and then run it as:
     ./dump-shared-library-contents <mylib>
 
 and it will dump out the data structures as the policy engine will see them.
+
+Note: once you have compiled the tool, you can test it on different versions of
+your library without re-building it.
 
