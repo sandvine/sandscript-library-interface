@@ -53,6 +53,9 @@ and then run it as:
 
 and it will dump out the data structures as the policy engine will see them.
 
+This tools walks the manifests but does not actually call the functions you
+have defined.
+
 Note: once you have compiled the tool, you can test it on different versions of
 your library without re-building it.
 
