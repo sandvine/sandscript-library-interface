@@ -27,14 +27,28 @@
 extern "C" {
 #endif
 
-// handle for an instance of an event allocated and freed by shared lib.
+//! Handle for an instance of an event allocated and freed by shared lib.
 typedef void* psl_EventInstanceHandle;
 
-//! @param context      The context number of the event being polled (in case the same function is used for different contexts).
-//! @param eventHandle  Returns a handle to the memory holding an event.
+//! @brief Type of function for raising events to SandScript.
+//
+//! Events are raised to SandScript by the Policy Engine polling for them.
+//! For each instance of an event, the PollEventsFn allocates a handle,
+//! which it returns as an opaque pointer (psl_EventInstanceHandle is a void*).
+//! This handle will be subsequently passed to psl_FieldGetFn to retrieve field
+//! values.
+//! When all policy in the SandScript event handler has been run, the handle
+//! is released by calling the psl_FreeEventFn.
+//! It is important the function only return events for the specified context;
+//! otherwise the Policy Engine may call the wrong fields with the handle.
+//! @param context      The context number of the event being polled (in
+//!                     case the same function is used for different contexts).
+//! @param eventHandle  Returns a handle to the private memory holding an event.
 //! @return -1 if no events; otherwise the number of events waiting after this one.
 typedef int psl_PollEventsFn(unsigned context, psl_EventInstanceHandle* eventHandle);
 
+//! The function prototype for freeing events obtained from the corresponding psl_PollEventsFn
+//! @param eventHandle  A handle previously obtained from psl_PollEventsFn
 typedef void psl_FreeEventFn(psl_EventInstanceHandle eventHandle);
 
 //! Description of an event raised by the shared library.

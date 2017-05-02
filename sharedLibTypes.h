@@ -1,5 +1,5 @@
 /*
-   Copyright 2016 Sandvine Incorporated ULC
+   Copyright 2016-2017 Sandvine Incorporated ULC
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -39,15 +39,19 @@ typedef enum psl_DataType
     psl_ipaddress = 4
 } psl_DataType;
 
+//! @brief Represents a string by pointer/length.
+//!
 //! String arguments and return values are references, not passed by value.
 //! Strings are pointer/length (not null-terminated).
 typedef struct psl_stringRef
 {
-    const char*    begin;
-    unsigned       length;
+    const char*    begin;  //!< Start of the binary string
+    unsigned       length; //!< Number of octets in the binary string
 } psl_stringRef;
 
-//! The argument and return values, per psl_DataType
+//! @brief The union to pass function arguments and return values.
+//!
+//! The member used depends on psl_DataType specified at the time the function was registered.
 typedef union psl_Value
 {
     bool          b;     //!< boolean
@@ -58,12 +62,29 @@ typedef union psl_Value
 } psl_Value;
 
 //! The function signature required for loadable functions.
-//! ResultLocation points to where the result will be stored.
-//! Arguments points to an array of pointers to the arguments.
-//! Null value arguments are represented by null pointers.
-//! E.g., if arg0 was defined as float type, first check if it is null by
-//!       checking Arguments[0]==0. If it is not null, access the arg by Arguments[0]->f
-//! Return value of true indicates the result is valid; false results in a null result.
+//! @param ResultLocation  When the function is called, this is where the
+//!                        function result must be stored if the function
+//!                        returns true. If the function returns false,
+//!                        the result is not used.
+//!                        The ResultLocation is a union. The function
+//!                        must fill the union according to the return
+//!                        type registered in psl_FunctionDescription.
+//!                        When returning a string, it is done by reference
+//!                        to static memory in the library; this memory
+//!                        will be copied before any other access is done
+//!                        to the library.
+//! @param Arguments  The arguments are passed to the function as an array
+//!                   of pointers to psl_Value unions. The array size is
+//!                   identical to the registered parameter list.
+//!                   Some parameters may be null, represented by a NULL pointer;
+//!                   it is up to the function to handle null in its own way.
+//!                   Each Arguments[i] parameter will have the appropriate type
+//!                   populated in the union according to the type specified
+//!                   in argTypes of the psl_FunctionDescription.
+//!                   E.g., if argTypes[2]==psl_float, first check if it is
+//!                   null by testing if Arguments[2]==NULL. If it is not NULL,
+//!                   then the argument will be available in Arguments[2]->f
+//! @return  value of true indicates the result is in ResultLocation; false indicates a null result.
 typedef bool psl_Function(psl_Value* ResultLocation, const psl_Value* const* Arguments);
 
 #ifdef __cplusplus
