@@ -13,14 +13,14 @@ symbols:
 
 These are both functions. You may implement one or both of these.
  
-GetManifest must be a symbol of type psl_GetManifest, specifically a function
+GetManifest must be a symbol of type `psl_GetManifest`, specifically a function
 that returns the manifest of all functions in the library. You will need to
-implement this if you want to extend SandScript with functions a SandScript
+implement this if you want to extend SandScript with **functions** a SandScript
 author can call.
 
-GetEventManifest must be a symbol of type psl_GetEventManifest, a function
+GetEventManifest must be a symbol of type `psl_GetEventManifest`, a function
 that returns the manifest of all of the events in the library.  You will need
-to implement this if you want to extend SandScript to raise events that can be
+to implement this if you want to extend SandScript to **raise events** that can be
 handled in SandScript.
 
 The library developer's primary role is to fill in the manifests with all of
@@ -37,6 +37,8 @@ linked with `-shared` and `-fPIC`. We also recommend turning on all warnings
 
     gcc -fPIC -Wall -shared -o my_shared_lib.so source1.c source2.c ...
 
+Deploy the shared library in `/usr/local/sandvine/loadable/` to be picked up
+the next time the policy engine is started.
 
 # Sanity-Checking
 
