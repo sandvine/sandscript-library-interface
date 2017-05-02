@@ -30,6 +30,14 @@ library. Please refer to the header files for more information:
  - `sharedLibManifest.h` -- for declaring functions
  - `sharedLibEvents.h` -- for declaring events
 
+# Doxygen
+
+The shared library interface is documented using doxygen, and a doxygen
+configuration file is provided. The following command will create html
+documentation in a sub-folder `documentation`.
+
+    doxygen doxygen.cfg
+
 # Compiling
 
 You are building a shared library, so (assuming you are using gcc) it must be
