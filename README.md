@@ -30,6 +30,17 @@ library. Please refer to the header files for more information:
  - `sharedLibManifest.h` -- for declaring functions
  - `sharedLibEvents.h` -- for declaring events
 
+# Naming Functions and Fields
+
+When you extend the Policy Engine, you want to avoid overlap with any other
+libraries or built-in subsystems. For this reason, we recommend the following
+naming conventions:
+ - choose a name for the subsystem (E.g., "Foo")
+ - all functions begin with the subsystem name (E.g., "Foo.Func()")
+ - choose a name for each event type (E.g., "Foo.Event1", "Foo.Event2")
+ - all fields begin with the event prefix the belong to (E.g.,
+   "Foo.Event1.Field1")
+
 # Doxygen
 
 The shared library interface is documented using doxygen, and a doxygen
