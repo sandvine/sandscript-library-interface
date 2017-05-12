@@ -1,10 +1,13 @@
 #ifndef POLICY_SHARED_LIB_ACTIONS_H
 #define POLICY_SHARED_LIB_ACTIONS_H
+#include <sharedLibTypes.h>
+#include <sharedLibEvents.h>
 
 //! Describes one argument of the action.
 typedef struct psl_ArgDescription
 {
-    const char*   argument_name;
+    const char*   arg_name;
+    uint16_t      arg_handle;
     psl_DataType  type;
     //! Argument flags: see psl_ActionArgFlag_*
     uint32_t      flags;
@@ -15,12 +18,12 @@ typedef struct psl_ArgDescription
 
 typedef struct psl_ArgValue
 {
-    //! A pointer to the same description provided by library when registering the action.
-    const psl_ArgDescription* argDefinition;
+    //! Handle to uniquely identify the parameter, from psl_ArgDescription
+    uint16_t      argHandle;
     //! If non-zero, the value is valid. If zero, the value is null.
-    uint8_t                   notNull;
+    uint8_t       notNull;
     //! Only valid if notNull; interpretation depends on argDefinition.type
-    psl_Value                 argValue;
+    psl_Value     argValue;
 } psl_ArgValue;
 
 //! @param Result  Location the function places the function return value. Never null pointer.
