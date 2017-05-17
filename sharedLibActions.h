@@ -1,7 +1,7 @@
 #ifndef POLICY_SHARED_LIB_ACTIONS_H
 #define POLICY_SHARED_LIB_ACTIONS_H
-#include <sharedLibTypes.h>
-#include <sharedLibEvents.h>
+#include "sharedLibTypes.h"
+#include "sharedLibEvents.h"
 
 //! Describes one argument of the action.
 typedef struct psl_ArgDescription
