@@ -64,9 +64,10 @@ the next time the policy engine is started.
 To 'test' your library, there is a simple tool that will open your shared
 library and read the manifests.
 
+In dump_util/
 You can compile `dump-shared-library-contents.c` as:
 
-    gcc -std=c99 -o dump-shared-library-contents dump-shared-library-contents.c -ldl
+    make
 
 and then run it as:
 
