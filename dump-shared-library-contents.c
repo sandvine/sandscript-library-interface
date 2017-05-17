@@ -20,11 +20,12 @@ static void
 dumpFunction(const psl_FunctionDescription * const f)
 {
     int i;
+    char args[180];
 
-    printf("%s %s(", types[f->returnType], f->functionName);
+    printf("| %-9s |%s(", types[f->returnType], f->functionName);
     for (i=0; i < f->numArgs; i++)
     {
-        printf("%s%s", types[f->argTypes[i]], (i+1< f->numArgs) ? ",":"");
+        printf("%s%s", types[f->argTypes[i]], (i+1< f->numArgs) ? ", ":"");
     }
     printf(")\n");
 }
@@ -78,18 +79,20 @@ dumpLib(char *lib)
 
     if (mp && (m=mp()) && m->numFunctionDescriptions)
     {
-        printf("Functions\n");
-        printf("=========\n");
-        //printf("m->version: %u, m->numFunctionDescriptions: %u, m->functionDesscriptions: %p\n", m->version, m->numFunctionDescriptions, m->functionDescriptions);
+	printf(" FUNCTIONS\n");
+	printf("------------------------------------------------------------------------------\n");
+        printf("|Return type| Function                                                       |\n");
+	printf("------------------------------------------------------------------------------\n");
         for (i = 0; i < m->numFunctionDescriptions; i++)
         {
             dumpFunction(m->functionDescriptions[i]);
-//            printf(" Fn: %s\n", m->functionDescriptions[i]->functionName);
         }
+	printf("------------------------------------------------------------------------------\n");
     }
 
     if (ep && (e=ep()) )
     {
+	printf(" EVENTS and FIELDS\n");
         dumpEvents(e);
     }
 }
