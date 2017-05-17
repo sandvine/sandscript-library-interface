@@ -66,7 +66,7 @@ library and read the manifests.
 
 You can compile `dump-shared-library-contents.c` as:
 
-    gcc -o dump-shared-library-contents dump-shared-library-contents.c -ldl
+    gcc -std=c99 -o dump-shared-library-contents dump-shared-library-contents.c -ldl
 
 and then run it as:
 
