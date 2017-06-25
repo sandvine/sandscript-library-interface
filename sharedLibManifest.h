@@ -58,7 +58,7 @@ typedef struct psl_Manifest
 } psl_Manifest;
 
 //! Function signature required for the function named "GetManifest"
-typedef const psl_Manifest* psl_GetManifest();
+typedef const psl_Manifest* psl_GetManifest(void);
 
 //! The function name to be retrieved via dlsym() from the shared library.
 //! This is the version 1 name. Different versions should implement different names.
