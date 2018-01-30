@@ -1,2 +1,3 @@
 samples/*.so
 documentation
+dump_util/dump-shared-library-contents
