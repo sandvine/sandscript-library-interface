@@ -10,8 +10,8 @@
 #define arraysize(A) (sizeof(A)/sizeof(&A[0]))
 
 // required interface
-psl_GetEventManifest GetEventManifest;
-psl_GetManifest GetManifest;
+psl_GetEventManifest GetEventManifest __attribute__ ((visibility ("default")));
+psl_GetManifest GetManifest __attribute__ ((visibility ("default")));
 
 static psl_PollEventsFn pulse_poll;
 static psl_FreeEventFn pulse_free;

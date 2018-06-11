@@ -32,7 +32,7 @@ struct psl_Manifest s_manifest = {
 };
 
 // every .so must implement GetManifest to the following signature.
-psl_GetManifest GetManifest; // verify it is correct type
+psl_GetManifest GetManifest __attribute__ ((visibility ("default"))); // verify it is correct type
 const psl_Manifest* GetManifest()
 {
     return &s_manifest;

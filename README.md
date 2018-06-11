@@ -7,12 +7,14 @@ Engine to arbitrary external shared libraries.
 # The Public Interfaces
 
 The SandScript Policy Engine will `dlopen()` the library and seek these
-symbols:
+symbols. 
  - `GetManifest`
  - `GetEventManifest`
  - `GetActionManifest`
 
 These symbols are functions. You may implement one or all of these.
+
+The library will be compiled with hidden visibility, which makes all the symbols hidden by default. Explicity mark the symbols that are intended to be exported. Add the attribute `__attribute__ (visibility ("default"))` to the definitions(Refer to trig.c or pulse.c):
  
 GetManifest must be a symbol of type `psl_GetManifest`, specifically a function
 that returns the manifest of all functions in the library. You will need to
@@ -64,9 +66,10 @@ documentation in a sub-folder `documentation`.
 # Compiling
 
 You are building a shared library, so (assuming you are using gcc) it must be
-linked with `-shared` and `-fPIC`. We also recommend turning on all warnings
+linked with `fvisibility=hidden`, `-shared` and `-fPIC`. 
+We also recommend turning on all warnings
 
-    gcc -fPIC -Wall -shared -o my_shared_lib.so source1.c source2.c ...
+    gcc -fPIC -Wall -fvisibility=hidden -shared -o my_shared_lib.so source1.c source2.c ...
 
 Deploy the shared library in `/usr/local/sandvine/loadable/` to be picked up
 the next time the policy engine is started.
