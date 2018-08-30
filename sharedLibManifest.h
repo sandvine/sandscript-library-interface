@@ -24,7 +24,7 @@
 #include "sharedLibTypes.h"
 
 #include <unistd.h>
-#include <stdbool.h>
+#include <stdbool.h>  // not needed
 
 #ifdef __cplusplus
 extern "C" {
